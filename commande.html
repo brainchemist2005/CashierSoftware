@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="device-width, initial-scale=1.0" name="viewport"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" rel="stylesheet"/>
+<link href="modified_commande.css" rel="stylesheet" type="text/css"/>
+<title>
+         Commande
+      </title>
+<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<!DOCTYPE html>
+
+<html lang="en">
+<body>
+<div class="container-fluid" id="container">
+<div class="input-group mb-3"></div>
+<div class="input-group mb-3">
+<label class="input-group-text">Options</label>
+<select class="form-select" id="inputGroupSelect01">
+<option selected="">Qui prends la commande ?</option>
+<option value="1">Rachid</option>
+<option value="2">Houda</option>
+<option value="3">Ghizlane</option>
+</select>
+</div>
+<div class="input-group mb-3">
+<span class="input-group-text" id="inputGroup-sizing-default">Combien de vetements y'a-t-il ?</span>
+<input aria-describedby="inputGroup-sizing-default" aria-label="Sizing example input" class="form-control" onchange="numberOfClothes(this.value)" type="number"/>
+</div>
+<div class="input-group mb-3">
+<label class="input-group-text">Article 1</label>
+<select aria-label="Default select example" class="form-select">
+<option selected="">Type d'article</option>
+<option value="1">T-shirt</option>
+<option value="2">Jeans</option>
+<option value="3">Chemise</option>
+<option value="3">Pantalon</option>
+<option value="3">Djelaba</option>
+<option value="3">Autre (Veuillez specifier dans la note)</option>
+</select>
+</div>
+<div class="input-group mb-3">
+<label class="input-group-text">Article 1</label>
+<select aria-label="Default select example" class="form-select">
+<option selected="">Couleur</option>
+<option value="rouge">Rouge</option>
+<option value="bleu">Bleu</option>
+<option value="jaune">Jaune</option>
+<option value="vert">Vert</option>
+<option value="orange">Orange</option>
+<option value="violet">Violet</option>
+<option value="marron">Marron</option>
+<option value="noir">Noir</option>
+<option value="blanc">Blanc</option>
+<option value="gris">Gris</option>
+<option value="rose">Rose</option>
+<option value="cyan">Cyan</option>
+<option value="magenta">Magenta</option>
+<option value="3">Autre (Veuillez specifier dans la note)</option>
+</select>
+</div>
+<div class="input-group mb-3">
+<label class="input-group-text">Article 1</label>
+<input aria-label="Amount (to the nearest dollar)" class="form-control" placeholder="Prix Unitaire" type="number"/>
+<span class="input-group-text">DH</span>
+</div>
+<div class="mb-3">
+<label class="form-label" for="exampleFormControlTextarea1">Details</label>
+<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+<div class="input-group mb-3">
+<input aria-label="Amount (to the nearest dollar)" class="form-control" placeholder="Prix Total" type="number"/>
+<span class="input-group-text">.00</span>
+<span class="input-group-text">DH</span>
+</div>
+<div class="form-check">
+<input class="form-check-input" id="paidInAdvance" name="paymentStatus" type="radio"/>
+<label class="form-check-label" for="paidInAdvance">Le client a payé le montant total en avance</label>
+</div>
+<div class="form-check">
+<input class="form-check-input" id="notPaidYet" name="paymentStatus" type="radio"/>
+<label class="form-check-label" for="notPaidYet">Le client n'a pas payé encore</label>
+</div>
+<button class="btn btn-primary" type="button">Soumettre</button>
+<button class="btn btn-danger" type="button">Annuler</button>
+</div>
+<script crossorigin="anonymous" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="commande.js"></script></body>
+</html>
+</html>
