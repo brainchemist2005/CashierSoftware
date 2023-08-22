@@ -1,16 +1,18 @@
 
 document.addEventListener("DOMContentLoaded", function() {
-    const numberInput = document.querySelector("#articleNumber");
-    const container = document.querySelector("#dynamicFieldsContainer");
+    const numberInput = document.querySelector("input[aria-label='Sizing example input']");
+    const container = document.querySelector("#container");
+    const prixTotalDiv = document.querySelector("input[placeholder='Prix Total']").parentNode; // Targeting the parent div of "Prix Total" input for reference
 
     numberInput.addEventListener("input", function() {
-        // Clear existing fields
-        container.innerHTML = "";
+        // Clear existing fields that were previously dynamically added
+        const existingDynamicFields = document.querySelectorAll(".dynamic-field");
+        existingDynamicFields.forEach(field => field.remove());
 
         const numberOfArticles = parseInt(numberInput.value, 10);
         for (let i = 0; i < numberOfArticles; i++) {
             const articleDiv = document.createElement("div");
-            articleDiv.id = "info";
+            articleDiv.classList.add("dynamic-field");
 
             const typeDiv = document.createElement("div");
             typeDiv.className = "input-group mb-3";
@@ -90,7 +92,8 @@ document.addEventListener("DOMContentLoaded", function() {
             articleDiv.appendChild(priceDiv);
             articleDiv.appendChild(detailsDiv);
 
-            container.appendChild(articleDiv);
+            // Inserting the dynamically generated content before the "Prix Total" div
+            container.insertBefore(articleDiv, prixTotalDiv);
         }
     });
 });
