@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function() {
     const numberInput = document.querySelector("input[aria-label='Sizing example input']");
     const container = document.querySelector("#container");
@@ -75,6 +74,9 @@ document.addEventListener("DOMContentLoaded", function() {
             priceDiv.appendChild(priceLabel);
             priceDiv.appendChild(priceInput);
             priceDiv.appendChild(priceUnit);
+            
+            // Added this line to attach event listener to the price input
+            priceInput.addEventListener("input", computeTotal);
 
             const detailsDiv = document.createElement("div");
             detailsDiv.className = "mb-3";
@@ -96,4 +98,18 @@ document.addEventListener("DOMContentLoaded", function() {
             container.insertBefore(articleDiv, prixTotalDiv);
         }
     });
+    
+    function computeTotal() {
+        const priceInputs = document.querySelectorAll(".dynamic-field input[placeholder='Prix Unitaire']");
+        let total = 0;
+        priceInputs.forEach(input => {
+            const value = parseFloat(input.value);
+            if (!isNaN(value)) {
+                total += value;
+            }
+        });
+        console.log("Computed Total: ", total);  // This line is added for debugging
+        document.querySelector("input[placeholder='Prix Total']").value = total;  // Removed extra space in 'Prix total' and "DH"
+    }
+    
 });
