@@ -37,9 +37,9 @@ def recherche():
     filter_invoices = [invoice for invoice in invoices 
                      if Kword in invoice['id'].lower() or Kword in invoice['date']]
     if not filter_invoices:
-        return render_template('rientrouve.html')
+        return render_template('notFound.html')
     else:  
-        return render_template('resultat_recherche.html', invoices=filter_invoices)
+        return render_template('results.html', invoices=filter_invoices)
 
 if __name__ == "__main__":
     app.run(debug=True)
