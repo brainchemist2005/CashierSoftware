@@ -55,7 +55,7 @@ class Database:
         else:
             return _build_invoice(item)
 
-    def add_invoice(user, name, date, totalPrice, isPaid, clothes_detail, color, price, details):
+    def add_invoice(self,user, name, date, totalPrice, isPaid, clothes_detail, color, price, details):
         connection = self.get_connection()
         cursor = connection.cursor()
 

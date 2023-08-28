@@ -1,3 +1,4 @@
+import sqlite3
 from flask import Flask, render_template, request, redirect, g, url_for
 from database import Database
 
@@ -15,15 +16,17 @@ def close_connection(exception):
     if db is not None:
         db.disconnect()
 
-@app.route('/',methods=['GET'])
+@app.route('/', methods=['GET'])
 def start():
     print("Hello")
 
 @app.route('/recu/<id_invoice>', methods=['GET'])
 def invoice_page(id_invoice):
     invoice = get_db().get_invoice(id_invoice)
-    if invoice:return render_template('details.html', invoice=invoice)
-    elif invoice is None: return redirect(404)
+    if invoice:
+        return render_template('details.html', invoice=invoice)
+    else:
+        return redirect(url_for('not_found'))  # Redirect to the not_found route
 
 @app.errorhandler(404)
 def not_found(e):
@@ -32,10 +35,12 @@ def not_found(e):
 @app.route('/recherche')
 def recherche():
     Kword = request.args.get('Kword').lower()
-    invoices = get_db().get_invoice()
+    db = get_db()
+    invoices = db.get_invoices()  # Use get_invoices from Database class
 
     filter_invoices = [invoice for invoice in invoices 
-                     if Kword in invoice['id'].lower() or Kword in invoice['date']]
+                     if Kword in str(invoice['id']).lower() or Kword in invoice['date']]
+
     if not filter_invoices:
         return render_template('notFound.html')
     else:  
