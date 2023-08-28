@@ -1,30 +1,5 @@
 import sqlite3
 
-#Invoice table
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS Invoices (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user TEXT NOT NULL,
-    name TEXT NOT NULL,
-    date DATE NOT NULL,
-    totalPrice REAL,
-    isPaid INTEGER
-)
-''')
-
-#Clothes table
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS Clothes (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    invoice_id INTEGER,
-    clothes_detail TEXT NOT NULL,
-    color TEXT,
-    price INTEGER,    
-    details TEXT,
-    FOREIGN KEY(invoice_id) REFERENCES Invoices(id)
-)
-''')
-
 class Database:
     def __init__(self):
         self.connection = None
@@ -39,15 +14,17 @@ class Database:
             self.connection.close()
 
     def get_invoices(self):
-        cursor = self.get_connection().cursor()
-        query = ("select id,name,date,totalPrice,isPaid,clothes_detail,color,details from invoices, Clothes")
+        connection = self.get_connection()
+        cursor = connection.cursor()
+        query = ("SELECT id, name, date, totalPrice, isPaid, clothes_detail, color, details FROM Invoices, Clothes WHERE Invoices.id = Clothes.invoice_id")
         cursor.execute(query)
         all_data = cursor.fetchall()
         return [_build_invoice(item) for item in all_data]
 
     def get_invoice(self, invoice_id):
-        cursor = self.get_connection().cursor()
-        query = ("select id,name,date,totalPrice,isPaid,details,color from invoices,clothes where id = ?")
+        connection = self.get_connection()
+        cursor = connection.cursor()
+        query = ("SELECT id, name, date, totalPrice, isPaid, details, color FROM Invoices, Clothes WHERE Invoices.id = ? AND Invoices.id = Clothes.invoice_id")
         cursor.execute(query, (invoice_id,))
         item = cursor.fetchone()
         if item is None:
@@ -55,7 +32,7 @@ class Database:
         else:
             return _build_invoice(item)
 
-    def add_invoice(self,user, name, date, totalPrice, isPaid, clothes_detail, color, price, details):
+    def add_invoice(self, user, name, date, totalPrice, isPaid, clothes_detail, color, price, details):
         connection = self.get_connection()
         cursor = connection.cursor()
 
