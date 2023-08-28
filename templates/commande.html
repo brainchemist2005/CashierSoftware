@@ -6,7 +6,7 @@
 <meta content="device-width, initial-scale=1.0" name="viewport"/>
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" rel="stylesheet"/>
-<link href="../static/css/#.css" rel="stylesheet" type="text/css"/>
+<link href="../static/css/#.css" rel="stylesheet" type="css"/>
 <title>
          Commande
       </title>
@@ -15,15 +15,16 @@
 </head>
 
 <body>
+<form action="/submit" method="POST">
 <div class="container-fluid" id="container">
 <div class="input-group mb-3"></div>
 <div class="input-group mb-3">
 <label class="input-group-text">Options</label>
-<select class="form-select" id="inputGroupSelect01">
+<select name="user" class="form-select" id="inputGroupSelect01">
 <option selected="">Qui prends la commande ?</option>
-<option value="1">Rachid</option>
-<option value="2">Houda</option>
-<option value="3">Ghizlane</option>
+<option value="Rachid">Rachid</option>
+<option value="Houda">Houda</option>
+<option value="Ghizlane">Ghizlane</option>
 </select>
 </div>
 
@@ -37,22 +38,24 @@
 </div>
 <div class="input-group mb-3">
 <span class="input-group-text">Prix total</span>
-<input aria-label="readonly input example" class="form-control" placeholder="Prix Total" type="number" readonly/>
+<input aria-label="readonly input example" name="totalPrice" class="form-control" placeholder="Prix Total" type="number" readonly/>
 <span class="input-group-text">.00</span>
 <span class="input-group-text">DH</span>
 </div>
 
 <div class="form-check">
-<input class="form-check-input" id="paidInAdvance" name="paymentStatus" type="radio"/>
+<input class="form-check-input" value="1" id="paidInAdvance" name="paymentStatus" type="radio"/>
 <label class="form-check-label" for="paidInAdvance">Le client a payé le montant total en avance</label>
 </div>
 <div class="form-check">
-<input class="form-check-input" id="notPaidYet" name="paymentStatus" type="radio"/>
+<input class="form-check-input" value="-1" id="notPaidYet" name="paymentStatus" type="radio"/>
 <label class="form-check-label" for="notPaidYet">Le client n'a pas payé encore</label>
 </div>
+<div id="butts">
 <button class="btn btn-primary" type="submit">Soumettre</button>
 <button class="btn btn-danger" type="button">Annuler</button>
 </div>
+</form>
 <script crossorigin="anonymous" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../static/js/commande.js"></script></body>
 </html>

@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const numberInput = document.querySelector("input[aria-label='Sizing example input']");
     const container = document.querySelector("#container");
     const prixTotalDiv = document.querySelector("input[placeholder='Prix Total']").parentNode; // Targeting the parent div of "Prix Total" input for reference
+    const clothesData = [];
 
-    numberInput.addEventListener("input", function() {
+    numberInput.addEventListener("input", function () {
         // Clear existing fields that were previously dynamically added
         const existingDynamicFields = document.querySelectorAll(".dynamic-field");
         existingDynamicFields.forEach(field => field.remove());
@@ -74,8 +75,8 @@ document.addEventListener("DOMContentLoaded", function() {
             priceDiv.appendChild(priceLabel);
             priceDiv.appendChild(priceInput);
             priceDiv.appendChild(priceUnit);
-            
-            // Added this line to attach event listener to the price input
+
+            // Added this line to attach an event listener to the price input
             priceInput.addEventListener("input", computeTotal);
 
             const detailsDiv = document.createElement("div");
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
             container.insertBefore(articleDiv, prixTotalDiv);
         }
     });
-    
+
     function computeTotal() {
         const priceInputs = document.querySelectorAll(".dynamic-field input[placeholder='Prix Unitaire']");
         let total = 0;
@@ -108,8 +109,31 @@ document.addEventListener("DOMContentLoaded", function() {
                 total += value;
             }
         });
-        console.log("Computed Total: ", total);  // This line is added for debugging
-        document.querySelector("input[placeholder='Prix Total']").value = total;  // Removed extra space in 'Prix total' and "DH"
+        console.log("Computed Total: ", total); // This line is added for debugging
+        document.querySelector("input[placeholder='Prix Total']").value = total; // Removed the extra space in 'Prix total' and "DH"
     }
-    
+
+    // Handling form submission
+    const form = document.querySelector("form");
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Collect form data
+        const formData = new FormData(form);
+
+        // Send the form data to the server using fetch
+        fetch("/submit", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json()) // Assuming the server responds with JSON
+            .then(data => {
+                console.log("Form submitted successfully:", data);
+                // Handle success or redirection here
+            })
+            .catch(error => {
+                console.error("Error submitting form:", error);
+                // Handle errors here
+            });
+    });
 });

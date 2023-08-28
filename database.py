@@ -1,5 +1,37 @@
 import sqlite3
 
+def get_connection_and_cursor():
+    connection = sqlite3.connect('db/invoices.db')
+    cursor = connection.cursor()
+    return connection, cursor
+
+# Invoice table
+connection, cursor = get_connection_and_cursor()
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS Invoices (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user TEXT NOT NULL,
+    name TEXT NOT NULL,
+    date DATE NOT NULL,
+    totalPrice REAL,
+    isPaid INTEGER
+)
+''')
+
+# Clothes table
+connection, cursor = get_connection_and_cursor()
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS Clothes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    invoice_id INTEGER,
+    clothes_detail TEXT NOT NULL,
+    color TEXT
+)
+''')
+connection.commit()
+connection.close()
+
+
 class Database:
     def __init__(self):
         self.connection = None

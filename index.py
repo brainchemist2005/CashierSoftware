@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 from flask import Flask, render_template, request, redirect, g, url_for
 from database import Database
 
@@ -20,13 +21,35 @@ def close_connection(exception):
 def start():
     print("Hello")
 
+@app.route('/submit', methods=['POST'])
+def submit_form():
+    user = request.form.get('user')
+    name = request.form.get('name')
+    date = datetime.date.today()
+    totalPrice = request.form.get('totalPrice')
+    isPaid = request.form.get('paymentStatus')
+    clothes_detail = request.form.get('clothes_detail')
+    color = request.form.get('color')
+    price = request.form.get('price')
+    details = request.form.get('details')
+
+    request_data = request.get_json()
+    clothes_data = request_data.get('clothesData', [])
+
+    db = get_db()
+    invoice_id = db.add_invoice(user, name, date, totalPrice, isPaid, clothes_detail, color, price, details)
+
+    print("Success")
+    print(user + " " + name)
+    return redirect(url_for('invoice_page', id_invoice=invoice_id))
+
 @app.route('/recu/<id_invoice>', methods=['GET'])
 def invoice_page(id_invoice):
     invoice = get_db().get_invoice(id_invoice)
     if invoice:
         return render_template('details.html', invoice=invoice)
     else:
-        return redirect(url_for('not_found'))  # Redirect to the not_found route
+        return redirect(url_for('not_found'))  
 
 @app.errorhandler(404)
 def not_found(e):
@@ -34,17 +57,23 @@ def not_found(e):
 
 @app.route('/recherche')
 def recherche():
-    Kword = request.args.get('Kword').lower()
+    query = request.args.get('query').lower()
     db = get_db()
-    invoices = db.get_invoices()  # Use get_invoices from Database class
+    invoices = db.get_invoices()
+    
+    filter = filter_invoice(invoices, query)
 
-    filter_invoices = [invoice for invoice in invoices 
-                     if Kword in str(invoice['id']).lower() or Kword in invoice['date']]
-
-    if not filter_invoices:
+    if not filter:
         return render_template('notFound.html')
     else:  
-        return render_template('results.html', invoices=filter_invoices)
+        return render_template('results.html', invoices=filter)
+
+def filter_invoice(invoices,query):
+    filter = []
+    for invoice in invoices:
+        if invoice['name'].lower()in query or invoice['id'] in query:
+            filter.append(invoice)
+    return filter
 
 if __name__ == "__main__":
     app.run(debug=True)
